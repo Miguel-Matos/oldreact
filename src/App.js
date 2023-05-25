@@ -1,25 +1,52 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+const Header = () => {
+  return (
+    <div>
+      <h1>Task Adder</h1>
+    </div>
+  )
+}
+
+class List extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      taskList: [],
+      userInput: ''
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+  }
+  
+
+  handleChange() {
+    this.setState(prevState => ({
+      taskList: [...prevState.taskList, document.getElementById('val').value]
+    }))
+  }
+
+  render() {
+    const listItem = this.state.taskList.map(item => <li key={item}>{item}</li>)
+
+    return (
+      <div>
+        <input id="val" type='text'></input>
+        <button onClick={this.handleChange} type='submit'>Add Task</button>
+        <ul>{listItem}</ul>
+      </div>
+
+    )
+  }
+}
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Header />
+        <List />
       </div>
     );
   }
